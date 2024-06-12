@@ -40,16 +40,9 @@ jobs:
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git config --global user.name "github-actions[bot]"
 
-    - name: Create branch and commit Docker image
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        # Clean and transform the docker image name to a valid branch name
-        branch_name=$(echo "${{ github.event.inputs.docker_image }}" | tr ':/. ' '-')
-        git checkout --orphan "$branch_name"
-        git rm -rf .
-        mv image.tar "$branch_name.tar"
-        git add .gitattributes
-        git add "$branch_name.tar"
-        git commit -m "Add Docker image ${{ github.event.inputs.docker_image }}"
-        git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git" "$branch_name" --force
+    - name : Upload packages
+      uses: actions/upload-artifact@master
+      if: always()
+      with:
+        name: image.tar
+        path: /
