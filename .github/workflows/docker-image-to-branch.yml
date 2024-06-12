@@ -29,9 +29,7 @@ jobs:
 
     - name: Save Docker image to tar file
       run: |
-        cd /
-        git clone https://github.com/Fido6/action-for-docker
-        cd /action-for-docker
+        pwd
         docker save -o image.tar ${{ github.event.inputs.docker_image }}
         
     - name: Set Git user
