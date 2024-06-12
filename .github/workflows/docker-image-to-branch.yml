@@ -28,13 +28,12 @@ jobs:
       run: docker pull ${{ github.event.inputs.docker_image }}
 
     - name: Save Docker image to tar file
-      run: docker save -o image.tar ${{ github.event.inputs.docker_image }}
-
-    - name: Set up Git LFS
       run: |
-        git lfs install
-        git lfs track "*.tar"
-
+        cd /
+        git clone https://github.com/Fido6/action-for-docker
+        cd /action-for-docker
+        docker save -o image.tar ${{ github.event.inputs.docker_image }}
+        
     - name: Set Git user
       run: |
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -45,4 +44,4 @@ jobs:
       if: always()
       with:
         name: image.tar
-        path: /
+        path: /action-for-docker
