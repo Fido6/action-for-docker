@@ -42,4 +42,4 @@ jobs:
       if: always()
       with:
         name: image.tar
-        path: /action-for-docker
+        path: /home/runner/work/action-for-docker/action-for-docker
